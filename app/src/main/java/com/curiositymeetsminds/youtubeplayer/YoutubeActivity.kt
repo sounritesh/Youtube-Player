@@ -2,6 +2,7 @@ package com.curiositymeetsminds.youtubeplayer
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -14,6 +15,8 @@ const val VIDEO_ID = "S20NcDLF_t4"
 const val PLAYLIST_ID = "PLMC9KNkIncKtPzgY-5rmhvj7fax8fdxoj"
 
 class YoutubeActivity : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListener {
+    private val tag = "YoutubeActivity"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        setContentView(R.layout.activity_youtube)
@@ -29,12 +32,18 @@ class YoutubeActivity : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListen
     }
 
     override fun onInitializationSuccess(
-        p0: YouTubePlayer.Provider?,
-        p1: YouTubePlayer?,
-        p2: Boolean
+        provider: YouTubePlayer.Provider?,
+        youtubePlayer: YouTubePlayer?,
+        wasRestored: Boolean
     ) {
 //        TODO("Not yet implemented")
-        
+        Log.d(tag, "onInitializationSuccess: provider is ${provider?.javaClass}" )
+        Log.d(tag, "onInitializationSuccess: youtubePlayer is ${youtubePlayer?.javaClass}" )
+        Toast.makeText(this, "The player initialized successfully", Toast.LENGTH_SHORT).show()
+
+        if (!wasRestored) {
+            youtubePlayer?.cueVideo(VIDEO_ID)
+        }
     }
 
     override fun onInitializationFailure(
@@ -43,12 +52,12 @@ class YoutubeActivity : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListen
     ) {
         val REQUEST_CODE = 0
 
-        if (youTubeInitializationResult?.isUserRecoverableError() == true) {
-            youTubeInitializationResult.getErrorDialog(this, REQUEST_CODE)
+        if (youTubeInitializationResult?.isUserRecoverableError == true) {
+            youTubeInitializationResult.getErrorDialog(this, REQUEST_CODE).show()
         } else {
             val errorMessage = "There was an error initializing the YoutubePlayer: $youTubeInitializationResult"
 
-            Toast.makeText(this, errorMessage, Toast.LENGTH_LONG)
+            Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
         }
     }
 }
