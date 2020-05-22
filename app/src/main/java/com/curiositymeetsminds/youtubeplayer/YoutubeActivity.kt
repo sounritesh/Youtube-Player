@@ -60,7 +60,6 @@ class YoutubeActivity : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListen
             youTubeInitializationResult.getErrorDialog(this, REQUEST_CODE).show()
         } else {
             val errorMessage = "There was an error initializing the YoutubePlayer: $youTubeInitializationResult"
-
             Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
         }
     }
