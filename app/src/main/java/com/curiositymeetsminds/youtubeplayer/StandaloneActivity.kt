@@ -19,8 +19,8 @@ class StandaloneActivity: AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View) {
         val intent = when(v.id) {
-            R.id.btnPlaySingle -> YouTubeStandalonePlayer.createVideoIntent(this,getString(R.string.GOOGLE_API_KEY), VIDEO_ID)
-            R.id.btnPlaylist -> YouTubeStandalonePlayer.createVideoIntent(this, getString(R.string.GOOGLE_API_KEY), PLAYLIST_ID)
+            R.id.btnPlaySingle -> YouTubeStandalonePlayer.createVideoIntent(this,getString(R.string.GOOGLE_API_KEY), VIDEO_ID, 0, true, true)
+            R.id.btnPlaylist -> YouTubeStandalonePlayer.createPlaylistIntent(this, getString(R.string.GOOGLE_API_KEY), PLAYLIST_ID, 0, 0, true, true)
             else -> throw IllegalArgumentException("Unassigned button was clicked")
         }
         startActivity(intent)
